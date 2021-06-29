@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const isFalsy = (value: unknown) => (value === 0 ? true : !!value);
 
@@ -22,7 +22,7 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-export const useDebounce = (value: unknown, delay?: number): any => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value);
 
   useEffect(() => {

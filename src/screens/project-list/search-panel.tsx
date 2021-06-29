@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface User {
   id: string;
@@ -14,7 +14,7 @@ interface SearchPanelProps {
     name: string;
     personId: string;
   };
-  setParam: (param: SearchPanelProps["param"]) => void;
+  setParam: (param: SearchPanelProps['param']) => void;
 }
 
 export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
@@ -22,7 +22,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
     <form>
       <div>
         <input
-          type='text'
+          type="text"
           value={param.name}
           onChange={(e) =>
             setParam({
@@ -40,7 +40,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
             })
           }
         >
-          <option value={""}>负责人</option>
+          <option value={''}>负责人</option>
           {users.map((user) => (
             <option key={user.id} value={user.id}>
               {user.name}
