@@ -1,20 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { loadDevTools } from 'jira-dev-tool';
+import 'antd/dist/antd.less';
 
 import { AppProvides } from './context';
 
-import { loadDevTools } from 'jira-dev-tool';
-
 loadDevTools(() =>
   ReactDOM.render(
-    <React.StrictMode>
-      <AppProvides>
-        <App />
-      </AppProvides>
-    </React.StrictMode>,
+    <AppProvides>
+      <App />
+    </AppProvides>,
     document.getElementById('root')
   )
 );
