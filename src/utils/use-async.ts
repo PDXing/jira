@@ -47,8 +47,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
         setData(data);
         return data;
       })
-      .catch((error) => {
-        setError(error);
+      .catch(async (error) => {
+        setError(await error);
         if (config.throwNewError) return Promise.reject(error);
         return error;
       });

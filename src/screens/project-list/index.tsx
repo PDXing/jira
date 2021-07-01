@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useDebounce } from 'utils';
+import { useDebounce, useDocumentTitle } from 'utils';
 
 import { SearchPanel } from './search-panel';
 import { List, Project } from './list';
@@ -25,6 +25,8 @@ export const ProjectListScreen = () => {
     });
     return list;
   };
+
+  useDocumentTitle('项目列表', false);
 
   return (
     <Container>
