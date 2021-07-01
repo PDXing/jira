@@ -2,28 +2,25 @@ import React, { useState } from 'react';
 
 import { RegisterScreen } from 'unauthenticated-app/register';
 import { LoginScreen } from 'unauthenticated-app/login';
-import { Card, Divider } from 'antd';
+import { Button, Card, Divider, Typography } from 'antd';
 import bg from 'assets/img/bg.jpg';
 
 import styled from '@emotion/styled';
 
 export const UnauthenticatedApp = () => {
-  const [isRegister, setIsregister] = useState(false);
-
-  const registerOrLoginClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    setIsregister(!isRegister);
-  };
+  const [isRegister, setIsregister] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
   return (
     <Container>
       <Card className="card">
         <h2 className="title">{isRegister ? '请注册' : '请登录'}</h2>
-        {isRegister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
+        {isRegister ? <RegisterScreen onError={setError} /> : <LoginScreen onError={setError} />}
         <Divider />
-        <a href="/" onClick={(e) => registerOrLoginClick(e)}>
+        <Button type="link" onClick={(e) => setIsregister(!isRegister)}>
           {isRegister ? '已有账号？点击登录' : '没有账号？点击注册'}
-        </a>
+        </Button>
       </Card>
     </Container>
   );
@@ -37,7 +34,7 @@ const Container = styled.div`
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100%;
-  background-image: url(${bg});
+  /* background-image: url(${bg}); */
   .card {
     width: 40rem;
     min-height: 40rem;

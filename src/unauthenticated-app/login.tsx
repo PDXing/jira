@@ -2,12 +2,14 @@ import React from 'react';
 import { useAuth } from 'context/auth-context';
 
 import { Button, Form, Input } from 'antd';
+import { useAsync } from 'utils/use-async';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ onError }: { onError: (error: Error) => void }) => {
   const { login } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwNewError: true });
 
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+    run(login(values)).catch(onError);
   };
 
   return (
@@ -19,7 +21,7 @@ export const LoginScreen = () => {
         <Input placeholder="密码" type="password" id="password" />
       </Form.Item>
       <Form.Item>
-        <Button style={{ width: '100%' }} type="primary" htmlType="submit">
+        <Button loading={isLoading} style={{ width: '100%' }} type="primary" htmlType="submit">
           登录
         </Button>
       </Form.Item>

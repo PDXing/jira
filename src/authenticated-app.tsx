@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useAuth } from 'context/auth-context';
 
 import { ProjectListScreen } from 'screens/project-list';
 import styled from '@emotion/styled';
-import { Dropdown, Menu } from 'antd';
+import { Button, Dropdown, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 import { Row } from 'components/lib';
@@ -15,7 +14,9 @@ export const AuthenticatedApp = () => {
   const menu = (
     <Menu>
       <Menu.Item key="logout">
-        <a onClick={() => logout()}>退出登录</a>
+        <Button type="link" onClick={() => logout()}>
+          退出登录
+        </Button>
       </Menu.Item>
     </Menu>
   );
@@ -30,9 +31,9 @@ export const AuthenticatedApp = () => {
         </HeaderLeft>
         <HeaderRight>
           <Dropdown overlay={menu}>
-            <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+            <Button type="link" className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
               Hi, {user?.name} <DownOutlined />
-            </a>
+            </Button>
           </Dropdown>
         </HeaderRight>
       </Header>

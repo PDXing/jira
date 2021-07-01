@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { cleanObject, useMount, useDebounce } from 'utils';
+import { useDebounce } from 'utils';
 
 import { SearchPanel } from './search-panel';
-import { List } from './list';
-import { useHttp } from 'utils/http';
+import { List, Project } from './list';
 import styled from '@emotion/styled';
+import { useProject } from 'utils/project';
+import { useUser } from 'utils/user';
+import { Typography } from 'antd';
 
 export const ProjectListScreen = () => {
-  const [users, setUsers] = useState([]);
-
   const [param, setParam] = useState({
     name: '',
     personId: '',
   });
 
   const debounceParam = useDebounce(param, 200);
-  const [list, setList] = useState([]);
-  const client = useHttp();
+  const { isLoading, error, data: list } = useProject(debounceParam);
+  const { data: users } = useUser();
   // console.log(`${apiUrl}/projects?$${qs.stringify(cleanObject(param))}`);
-
-  useEffect(() => {
-    client('projects', { data: cleanObject(debounceParam) }).then(setList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceParam]);
-
-  useMount(() => {
-    client('users').then(setUsers);
-  });
+  const addKey = (list: Project[]) => {
+    list.forEach((item) => {
+      item.key = item.id;
+    });
+    return list;
+  };
 
   return (
     <Container>
       <h1>项目列表</h1>
-      <SearchPanel users={users} param={param} setParam={setParam} />
-      <List list={list} users={users} />
+      <SearchPanel users={users || []} param={param} setParam={setParam} />
+      {error ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
+      <List loading={isLoading} dataSource={addKey(list || [])} users={users || []} />
     </Container>
   );
 };
